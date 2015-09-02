@@ -3,7 +3,7 @@ Make ZIP-file of a folder. Eg. Zipping a folder for downloading it faster than v
 Useful if you do not have SFTP or SSH access to your web server and want to download a large folder.
 
 ## Usage
-- Download the `vejnoe-zipper.php` file.
+- [Download the `vejnoe-zipper.php` file](https://github.com/vejnoe/vejnoe-zipper/archive/master.zip).
 - Uploade it to your server eg. via FTP.
 - Browse the file on you server via a internet browser. Eg. `http://www.vejnoe.dk/vejnoe-zipper.php`
 - Click the folder you wish to ZIP.
