@@ -62,6 +62,7 @@
     ul { padding-left: 1.4rem; }
     li.folder { list-style-image: url(//files.vejnoe.dk/theme/icons/folder-osx.png); }
     li.zip { list-style-image: url(//files.vejnoe.dk/theme/icons/zip.png); }
+    .vejnoe:hover svg g#logo { fill: #2281d0; }
   </style>
 </head>
 <body>
@@ -125,6 +126,12 @@ if (isset($_GET['delete'])) {
 
   print '<h2>Good bye</h2>';
   print '<p><code>' . __FILE__ . '</code> has been deleted.</p>';
+  print '<p><strong>Thanks for using this script</strong><br>If you found it helpfull please Star this project on GitHub :)</p>';
+  print '<iframe src="https://ghbtns.com/github-btn.html?user=vejnoe&repo=vejnoe_zipper&type=watch&count=false&size=large&v=2" frameborder="0" scrolling="0" width="100px" height="30px"></iframe>';
+  print '<iframe src="https://ghbtns.com/github-btn.html?user=vejnoe&repo=vejnoe_zipper&type=fork&count=false&size=large" frameborder="0" scrolling="0" width="87px" height="30px"></iframe>';
+  print '<iframe src="https://ghbtns.com/github-btn.html?user=vejnoe&type=follow&count=false&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>';
+  print '<br><br><a class="vejnoe" href="http://vejnoe.dk?from=vejnoe_zipper" target="_blank" title="Vejnø – Creative Web Development – www.vejnoe.dk – ">Creative Web Development by <svg height="9px" version="1.1" viewbox="0 0 10 6" width="15px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="none" fill-rule="evenodd" id="vejnoe" stroke="none" stroke-width="0"><g fill="#666666" id="logo" transform="translate(-1164.000000, -2473.000000)"><path d="M1164,2473 L1174,2473 L1174,2479 L1164,2479 L1164,2473 Z M1166,2475 L1168,2475 L1168,2477 L1166,2477 L1166,2475 Z M1170,2475 L1172,2475 L1172,2477 L1170,2477 L1170,2475 Z" id="vejnoe-logo"></path></g></g></svg> Vejnø</a>';
+  // Deleting the hole script file
   unlink(__FILE__);
 
 } else {
