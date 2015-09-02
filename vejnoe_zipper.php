@@ -124,7 +124,7 @@ if (isset($_GET['delete'])) {
 } else if (isset($_GET['self-destruct']) && $_GET['self-destruct'] == true) {
 
   print '<h2>Good bye</h2>';
-  print '<p><code>__FILE__</code> has been deleted.</p>';
+  print '<p><code>' . __FILE__ . '</code> has been deleted.</p>';
   unlink(__FILE__);
 
 } else {
