@@ -1,5 +1,5 @@
 # FTP Zipper (PHP) by Vejnø
-Make ZIP-file of a folder. Eg. Zipping a folder for downloading it faster than via normal FTP. 
+Make ZIP-file of a folder. Eg. zipping a folder for downloading it faster than via normal FTP. 
 Useful if you do not have SFTP or SSH access to your web server and want to download a large folder.
 
 ## Usage
