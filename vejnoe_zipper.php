@@ -33,6 +33,8 @@
       line-height: 4rem;
       padding: .2rem;
     }
+    code.alert { color: #9a002a; }
+    code.success { color: #339c54; }
     a {
       color: #61666c;
       text-decoration: none;
@@ -45,21 +47,21 @@
       display: inline-block;
       line-height: 2rem;
       padding: 0 1rem;
-      margin-top: 4rem;
+      border-radius: 2px;
     }
     .button:hover, .button:focus {
       color: #fff;
-      background-color: #2281d0;
+      background-color: #1664a6;
     }
-    .alert { background-color: #C8073B; }
-    .alert:hover, .alert:focus { background-color: #9a002a; }
+    .button.alert { background-color: #C8073B; }
+    .button.alert:hover, .button.alert:focus { background-color: #9a002a; }
     .tiny {
       font-size: .8rem;
       line-height: 1.5rem;
       padding: 0 .5rem;
     }
-    .delete { margin-left: 1rem; }
-    ul { padding-left: 1.4rem; }
+    ul { padding-left: 1.4rem; margin-bottom: 3rem; }
+    li { margin-bottom: .4rem; }
     li.folder { list-style-image: url(//files.vejnoe.dk/theme/icons/folder-osx.png); }
     li.zip { list-style-image: url(//files.vejnoe.dk/theme/icons/zip.png); }
     .vejnoe:hover svg g#logo { fill: #2281d0; }
@@ -71,16 +73,16 @@
 // The zipper script
 if (isset($_GET['delete'])) {
 
-  if (file_exists($_GET['delete'] . '.zip')) {
+  if (file_exists($_GET['delete'])) {
     // Delete file
-    unlink($_GET['delete'] . '.zip');
+    unlink($_GET['delete']);
     // Content
     print '<h2>File deleted</h2>';
     print '<ul><li class="zip" style="text-decoration: line-through">' . $_GET['delete'] . '.zip</li></ul>';
   } else {
     // Content
     print '<h2>File does not exists</h2>';
-    print '<p><code>' . $_GET['delete'] . '.zip</code></p>';
+    print '<p><code>' . $_GET['delete'] . '</code></p>';
   }
 
   print '<br><br><a href="' . basename(__FILE__, '.php') . '.php" class="button back">Back</a>';
@@ -119,7 +121,7 @@ if (isset($_GET['delete'])) {
 
   // Content
   print '<h2>Folder zipped</h2>';
-  print '<ul><li class="zip"><a href="' . $_GET['path'] . $the_date . '.zip">' . $_GET['path'] . $the_date . '.zip</a> <a href="?delete=' . $_GET['path'] . $the_date . '" class="button alert tiny delete">Delete</a></li></ul>';
+  print '<ul><li class="zip"><a href="' . $_GET['path'] . $the_date . '.zip">' . $_GET['path'] . $the_date . '.zip</a>   <a href="?delete=' . $_GET['path'] . $the_date . '.zip" class="button alert tiny delete">Delete</a></li></ul>';
   print '<br><br><a href="' . basename(__FILE__, '.php') . '.php" class="button back">Back</a>';
 
 } else if (isset($_GET['self-destruct']) && $_GET['self-destruct'] == true) {
@@ -136,17 +138,32 @@ if (isset($_GET['delete'])) {
 
 } else {
 
+  if (isset($_GET['unzip'])):
+    $zip = new ZipArchive;
+    $res = $zip->open($_GET['unzip']);
+    if ($res === TRUE) {
+      $zip->extractTo(realpath('.'));
+      $zip->close();
+      print '<code class="success">"' . $_GET['unzip'] . '" got Unziped</code>';
+    } else {
+      print '<code class="alert">Sorry, could&#039;t Unzip "' . $_GET['unzip'] . '"!</code>';
+    }
+  endif;
+
   // Get current directory
   $rootPath = realpath('.');
   $directory = array_diff(scandir($rootPath), array('..', '.'));
-  $directory = array_filter($directory, 'is_dir');
 
   // Content
   print '<h2>Click a folder to ZIP</h2>';
   print 'Current directory <code>' . $rootPath . '/</code>';
   print '<ul>';
-  foreach ($directory as $folder) {
-    print '<li class="folder"><a href="?path='.$folder.'">'.$folder.'</a></li>';
+  foreach ($directory as $file) {
+    if (is_dir($file)):
+      print '<li class="folder">'.$file.'   <a href="?path='.$file.'" class="button tiny zip">Zip</a></li>';
+    elseif (preg_match('/.+\.zip$/', $file)):
+      print '<li class="zip">'.$file.'   <a href="?delete=' . $file . '" class="button tiny alert delete">Delete</a> <a href="?unzip=' . $file . '" class="button tiny unzip">Unzip</a></li>';
+    endif;
   }
   print '</ul>';
   print '<a href="?self-destruct=true" class="button alert">Self destruct</a>';
